@@ -72,7 +72,8 @@ int main() {
 
 	// How many 4-byte ints fit in 10 bytes? 2 with 2 bytes left over.
 
-	// The high word (16 bits) of ai[2] will not be set to 0.
+	// Only 16 bits of 32-bit ai[2] will be set to 0.
+	// a[2] through a[9] will not be set to 0.
 	// a[2] through a[9] will add a running total to random garbage.
     
     cout << "Hello World!\n";
