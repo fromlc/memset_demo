@@ -22,11 +22,14 @@ using std::cout;
 // entry point
 //------------------------------------------------------------------------------
 int main() {
-	// When you declare an array, you can also initialize 
-	// all elements to zero with {} 
+	// When you declare an array, initialize all elements to zero with {} 
 
-	int ai[ELEMENTS];
-	
+	int ai[ELEMENTS] = {};
+
+	// What happens when you don't initialize the elements?
+	// Array memory will contain whatever was there before.
+	int aiJunk[ELEMENTS];
+
 	// You can also use memset() but be careful: memset works with bytes.
 	// memset() needs to know the number of _bytes_ in your array.
 
@@ -35,7 +38,7 @@ int main() {
 	// This won't work as intended..
 	memset(ai, 0, ELEMENTS);			// This is a bug!
 
-	// ..in fact, this covers up a subtle bug. More on this later.
+	// ..in fact, this creates a subtle bug. More on this later.
 
 	// Array ai has more than ELEMENTS bytes: instead,
 	// each of the int elements is (usually) 4 bytes long.
@@ -51,12 +54,22 @@ int main() {
 	// Use the new operator to allocate arrays like this
 	int* pI = new int[ELEMENTS];
 
-	memset(pI, 0, ELEMENTS * sizeof(int));
+	// DON'T do this:
+	int* pOneI = new int(ELEMENTS);		// This is a bug!
+	//memset(pOneI, 0, ELEMENTS * sizeof(int));
+
+	// pOneI will point to an array of one int initialized to the value of ELEMENTS
+	delete pOneI;
+
+	// Write a 0 to each byte of the memory block pointed to by pV
+	void* pV = memset(pI, 0, ELEMENTS * sizeof(int));
 
 	// Release allocated arrays like this
 	delete[] pI;
 
-	// Remember that subtle bug? 
+	//------------------------------------------------------------------------------
+	// Remember that subtle bug on line 39? 
+	//------------------------------------------------------------------------------
 
 	// Say you have an array of 10 ints: int ai[10];
 
