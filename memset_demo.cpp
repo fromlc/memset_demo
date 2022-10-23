@@ -81,7 +81,7 @@ int main() {
 	// how many running totals will be correct?
 
 	// A:
-	// Only ai[0] and ai[1] will be correct! 
+	// If an int occupies 4 bytes, only ai[0] and ai[1] will be correct! 
 
 	// How many 4-byte ints fit in 10 bytes? 2 with 2 bytes left over.
 
